@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transfera Flight Logistics</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+  input, button { padding: 10px; font-size: 16px; }
+  button { margin-left: 10px; cursor: pointer; }
+  .result { margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+</style>
+</head>
+<body>
+
+<h2>Transfera Flight Logistics</h2>
+<p>Enter a flight number to see the recommended departure time from TLC01:</p>
+
+<input type="text" id="flightNo" placeholder="e.g., W64106">
+<button onclick="getFlightInfo()">Check Flight</button>
+
+<div class="result" id="result"></div>
+
+<script>
+async function getFlightInfo() {
+    const flightNo = document.getElementById('flightNo').value.trim();
+    if(!flightNo) return alert("Please enter a flight number.");
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = "Fetching data...";
+
+    try {
+        // Call your QuickSuite agent (or directly call APIs if QuickSuite does not provide public endpoint)
+        // For demo, we simulate response:
+        // Replace this with fetch("YOUR_AGENT_PUBLIC_URL?flight_no="+flightNo)
+        const simulatedResponse = {
+            flightNumber: flightNo,
+            flightStatus: "Scheduled",
+            landingTime: "14:55",
+            trafficDurationMin: 40,
+            distanceKm: 26.5,
+            recommendedDeparture: "13:45"
+        };
+
+        resultDiv.innerHTML = `
+            <b>Flight Number:</b> ${simulatedResponse.flightNumber}<br>
+            <b>Flight Status:</b> ${simulatedResponse.flightStatus}<br>
+            <b>Landing Time Used:</b> ${simulatedResponse.landingTime}<br>
+            <b>Live Traffic Duration:</b> ${simulatedResponse.trafficDurationMin} minutes<br>
+            <b>Distance:</b> ${simulatedResponse.distanceKm} km<br>
+            <b>Recommended Departure Time from TLC01:</b> ${simulatedResponse.recommendedDeparture}
+        `;
+    } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = "Error fetching data.";
+    }
+}
+</script>
+
+</body>
+</html>
